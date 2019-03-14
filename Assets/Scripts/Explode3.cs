@@ -5,6 +5,8 @@ using UnityEngine;
 public class Explode3 : MonoBehaviour
 {
     public float delay = 5f;
+    public float radius = 10f;
+    public float force = 999f;
 
     public GameObject explosionEffect;
 
@@ -29,6 +31,23 @@ public class Explode3 : MonoBehaviour
     void Explodes()
     {
         Instantiate(explosionEffect, transform.position, transform.rotation);
+        Collider[] collidersToDestroy = Physics.OverlapSphere(transform.position, radius);
+
+        foreach (Collider nearbyObject in collidersToDestroy)
+        {
+            Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.AddExplosionForce(force, transform.position, radius);
+            }
+
+            Destructible dest = nearbyObject.GetComponent<Destructible>();
+            if (dest != null)
+            {
+                dest.Destroy();
+            }
+        }
+
         Destroy(gameObject);
     }
 }

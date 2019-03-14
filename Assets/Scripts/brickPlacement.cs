@@ -9,9 +9,12 @@ public class brickPlacement : MonoBehaviour
     public Transform prefab;
     void Start()
     {
-        for (int i = 0; i < 100; i+=10)
+        for (int i = -30; i < 40; i+=10)
         {
-            Instantiate(prefab, new Vector3(i * 2.0F, 0, 0), Quaternion.identity);
+            for (int j = -30; j < 50; j += 10) 
+            {
+                Instantiate(prefab, new Vector3(i * 2.17F, 5, j * 2.13F-10), Quaternion.identity);
+            }
         }
     }
 }
